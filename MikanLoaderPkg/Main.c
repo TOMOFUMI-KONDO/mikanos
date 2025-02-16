@@ -1,10 +1,12 @@
-#include  <Uefi.h>
-#include  <Library/UefiLib.h>
+// Copyright 2025. All rights reserved.
 
-EFI_STATUS EFIAPI UefiMain(
-    EFI_HANDLE image_handle,
-    EFI_SYSTEM_TABLE *system_table) {
+#include <Library/UefiLib.h>
+#include <Uefi.h>
+
+EFI_STATUS EFIAPI UefiMain(EFI_HANDLE image_handle,
+                           EFI_SYSTEM_TABLE *system_table) {
   Print(L"Hello, Mikan World!\n");
-  while (1);
+  while (1) {
+  }
   return EFI_SUCCESS;
 }

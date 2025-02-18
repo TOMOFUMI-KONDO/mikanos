@@ -1,0 +1,4 @@
+-target
+x86_64-pc-win32-coff
+-I/home/ubuntu/edk2/MdePkg/Include/
+-I/home/ubuntu/edk2/MdePkg/Include/X64

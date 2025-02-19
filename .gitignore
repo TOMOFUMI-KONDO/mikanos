@@ -1,0 +1,4 @@
+mikanos.img
+
+kernel/*.elf
+kernel/*.o

@@ -1,6 +1,5 @@
 // Copyright 2025 TOMOFUMI-KONDO.
 
-#include "Protocol/GraphicsOutput.h"
 #include <Uefi.h>
 
 #include <Guid/FileInfo.h>

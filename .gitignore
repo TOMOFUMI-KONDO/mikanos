@@ -1,4 +1,6 @@
 mikanos.img
 
+MikanLoaderPkg/compile_flags.txt
+
 kernel/*.elf
 kernel/*.o

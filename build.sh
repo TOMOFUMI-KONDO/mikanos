@@ -3,9 +3,10 @@
 set -e
 
 (\
+. $HOME/osbook/devenv/buildenv.sh; \
 cd ./kernel; \
-clang++ -O2 -Wall -g --target=x86_64-elf -ffreestanding -mno-red-zone -fno-exceptions -fno-rtti -std=c++17 -c main.cpp; \
-ld.lld --entry KernelMain -z norelro --image-base 0x100000 --static -o kernel.elf main.o \
+clang++ $CPPFLAGS -O2 -Wall -g --target=x86_64-elf -ffreestanding -mno-red-zone -fno-exceptions -fno-rtti -std=c++17 -c main.cpp; \
+ld.lld $LDFLAGS --entry KernelMain -z norelro --image-base 0x100000 --static -o kernel.elf main.o \
 )
 
 DISK_IMG="$HOME/mikanos/mikanos.img"

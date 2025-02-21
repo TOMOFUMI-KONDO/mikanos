@@ -1,5 +1,6 @@
 // Copyright 2025 TOMOFUMI-KONDO.
 
+#include "ProcessorBind.h"
 #include <Uefi.h>
 
 #include <Guid/FileInfo.h>
@@ -138,8 +139,9 @@ EFI_STATUS EFIAPI UefiMain(EFI_HANDLE image_handle,
   }
 
   UINT64 entry_addr = *(UINT64 *)(kernel_base_addr + 24);
-  typedef void EntryPointType(void);
-  ((EntryPointType *)entry_addr)();
+  typedef void EntryPointType(UINT64, UINT64);
+  ((EntryPointType *)entry_addr)(gop->Mode->FrameBufferBase,
+                                 gop->Mode->FrameBufferSize);
 
   Print(L"All done\n");
 

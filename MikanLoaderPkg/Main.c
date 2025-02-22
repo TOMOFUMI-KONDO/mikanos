@@ -1,6 +1,5 @@
 // Copyright 2025 TOMOFUMI-KONDO.
 
-#include "ProcessorBind.h"
 #include <Uefi.h>
 
 #include <Guid/FileInfo.h>

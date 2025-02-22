@@ -4,14 +4,11 @@
 
 #include <Guid/FileInfo.h>
 #include <Library/MemoryAllocationLib.h>
-#include <Library/PrintLib.h>
 #include <Library/UefiBootServicesTableLib.h>
 #include <Library/UefiLib.h>
 #include <Protocol/LoadedImage.h>
-#include <Protocol/SimpleFileSystem.h>
 
 #include "./frame_buffer_config.hpp"
-#include "Protocol/GraphicsOutput.h"
 
 struct MemoryMap {
   UINTN buffer_size;

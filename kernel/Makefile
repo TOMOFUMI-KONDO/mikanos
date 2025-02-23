@@ -1,7 +1,7 @@
 OBJS = main.o pixel_writer.o
 
 EDK2DIR = /home/edk2
-CPPFLAGS += $(EDK2DIR)/MdePkg/Include $(EDK2DIR)/MdePkg/Include/X64
+CPPFLAGS += -I$(EDK2DIR)/MdePkg/Include -I$(EDK2DIR)/MdePkg/Include/X64
 CXXFLAGS += -O2 -Wall -g --target=x86_64-elf -ffreestanding -mno-red-zone -fno-exceptions -fno-rtti -std=c++17
 LDFLAGS += --entry KernelMain -z norelro --image-base 0x100000 --static
 

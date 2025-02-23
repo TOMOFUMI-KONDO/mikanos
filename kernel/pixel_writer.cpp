@@ -1,9 +1,6 @@
 // Copyright 2025 TOMOFUMI-KONDO.
 
-#pragma once
-
-#include <pixel_writer.hpp>
-
+#include "./pixel_writer.hpp"
 #include "./frame_buffer_config.hpp"
 
 uint8_t *PixelWriter::PixelAt(int x, int y) {

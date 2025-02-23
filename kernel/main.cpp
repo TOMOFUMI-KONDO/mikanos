@@ -30,6 +30,8 @@ extern "C" void KernelMain(const FrameBufferConfig &frame_buffer_config) {
         BGRResv8BitPerColorPixelWriter{frame_buffer_config};
     break;
   }
+  default:
+    Halt();
   }
 
   for (int x = 0; x < frame_buffer_config.horizontal_resolution; ++x) {

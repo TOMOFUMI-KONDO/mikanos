@@ -7,7 +7,7 @@
 #include "./frame_buffer_config.hpp"
 
 uint8_t *PixelWriter::PixelAt(int x, int y) {
-  return config_.frame_buffer + 4 * (config_.horizontal_resolution * y + x);
+  return config_.frame_buffer + 4 * (config_.pixels_per_scan_line * y + x);
 }
 
 void RGBResv8BitPerColorPixelWriter::Write(int x, int y, const PixelColor &c) {

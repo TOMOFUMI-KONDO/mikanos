@@ -1,32 +1,13 @@
 // Copyright 2025 TOMOFUMI-KONDO.
 
-#include <cstdint>
+#include <cstddef>
 
 #include "./frame_buffer_config.hpp"
+#include "./pixel_writer.hpp"
 
-struct PixelColor {
-  uint8_t r, g, b;
-};
+void *operator new(size_t size, void *buf) { return buf; }
 
-int WritePixel(const FrameBufferConfig &config, int x, int y,
-               const PixelColor &c) {
-  const int pixel_position = config.pixels_per_scan_line * y + x;
-  uint8_t *p = &config.frame_buffer[4 * pixel_position];
-
-  if (config.pixel_format == kPixelRGBResv8BitPerColor) {
-    p[0] = c.r;
-    p[1] = c.g;
-    p[2] = c.b;
-  } else if (config.pixel_format == kPixelBGRResv8BitPerColor) {
-    p[0] = c.b;
-    p[1] = c.g;
-    p[2] = c.r;
-  } else {
-    return -1;
-  }
-
-  return 0;
-}
+void operator delete(void *obj) noexcept {}
 
 void Halt(void) {
   while (1)
@@ -34,15 +15,32 @@ void Halt(void) {
 }
 
 extern "C" void KernelMain(const FrameBufferConfig &frame_buffer_config) {
+  PixelWriter *pixel_writer;
+
+  switch (frame_buffer_config.pixel_format) {
+  case kPixelRGBResv8BitPerColor: {
+    char pixel_writer_buf[sizeof(RGBResv8BitPerColorPixelWriter)];
+    pixel_writer = new (pixel_writer_buf)
+        RGBResv8BitPerColorPixelWriter{frame_buffer_config};
+    break;
+  }
+  case kPixelBGRResv8BitPerColor: {
+    char pixel_writer_buf[sizeof(BGRResv8BitPerColorPixelWriter)];
+    pixel_writer = new (pixel_writer_buf)
+        BGRResv8BitPerColorPixelWriter{frame_buffer_config};
+    break;
+  }
+  }
+
   for (int x = 0; x < frame_buffer_config.horizontal_resolution; ++x) {
     for (int y = 0; y < frame_buffer_config.vertical_resolution; ++y) {
-      WritePixel(frame_buffer_config, x, y, {255, 255, 255});
+      pixel_writer->Write(x, y, {255, 255, 255});
     }
   }
 
   for (int x = 0; x < 200; ++x) {
     for (int y = 0; y < 100; ++y) {
-      WritePixel(frame_buffer_config, 100 + x, 100 + y, {0, 255, 0});
+      pixel_writer->Write(100 + x, 100 + y, {0, 255, 0});
     }
   }
 

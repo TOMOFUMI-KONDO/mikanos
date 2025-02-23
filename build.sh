@@ -2,7 +2,11 @@
 
 set -e
 
-(cd ./kernel; make kernel.elf)
+(\
+    . $HOME/osbook/devenv/buildenv.sh;\
+    cd ./kernel; \
+    make kernel.elf\
+)
 
 DISK_IMG="$HOME/mikanos/mikanos.img"
 MOUNT_POINT=./mnt

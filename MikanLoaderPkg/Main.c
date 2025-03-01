@@ -95,15 +95,6 @@ EFI_STATUS EFIAPI UefiMain(EFI_HANDLE image_handle,
     Print(L"faield to open gop: %r\n", status);
     Halt();
   }
-  Print(L"Resolution: %ux%u, Pixel Format: %s, %u pixels/line\n",
-        gop->Mode->Info->HorizontalResolution,
-        gop->Mode->Info->VerticalResolution,
-        GetPixelFormatUnicode(gop->Mode->Info->PixelFormat),
-        gop->Mode->Info->PixelsPerScanLine);
-  Print(L"Frame Buffer 0x%0lx - 0x%0lx, Size: %lu bytes\n",
-        gop->Mode->FrameBufferBase,
-        gop->Mode->FrameBufferBase + gop->Mode->FrameBufferSize,
-        gop->Mode->FrameBufferSize);
 
   EFI_FILE_PROTOCOL *root_dir;
   status = OpenRootDir(image_handle, &root_dir);
@@ -112,8 +103,10 @@ EFI_STATUS EFIAPI UefiMain(EFI_HANDLE image_handle,
     Halt();
   }
 
+  CHAR16 *kernel_file_name = L"\\kernel.elf";
+  Print(L"kernel_file_name len: %d\n", StrLen(kernel_file_name));
   EFI_FILE_PROTOCOL *kernel_file;
-  status = root_dir->Open(root_dir, &kernel_file, L"\\kernel.elf",
+  status = root_dir->Open(root_dir, &kernel_file, kernel_file_name,
                           EFI_FILE_MODE_READ, 0);
   if (EFI_ERROR(status)) {
     Print(L"failed to open kernel.elf: %r\n", status);
